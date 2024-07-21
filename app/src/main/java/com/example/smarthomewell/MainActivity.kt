@@ -107,7 +107,7 @@ class MainActivity : AppCompatActivity() {
         textViewPressPomp = findViewById(R.id.textViewPressPomp)
 
         findViewById<ImageButton>(R.id.imageButtonPowerOnOff).setOnClickListener {
-            ONOFF = 1
+            ONOFF = if (ONOFF == 1) 0 else 1
             // Установка значения переменной в TextView
             textViewVarHys.text = "$ONOFF"
             print("ONOFF ")
