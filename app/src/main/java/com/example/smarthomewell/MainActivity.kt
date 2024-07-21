@@ -114,9 +114,7 @@ class MainActivity : AppCompatActivity() { // Определение класс�
         textViewOnOff = findViewById(R.id.textViewOnOff)
 
         textViewPresure = findViewById(R.id.textViewPresure)
-        textViewCount = findViewById(R.id.textViewCount)
         textViewOnOff = findViewById(R.id.textViewOnOff)
-        textViewHysteresis = findViewById(R.id.textViewHysteresis)
         textViewTemperature = findViewById(R.id.textViewTemperature)
         textViewSensorStatus = findViewById(R.id.textViewSensorStatus)
         textViewRalyOnOff = findViewById(R.id.textViewRalyOnOff)
