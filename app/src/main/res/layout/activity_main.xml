@@ -97,6 +97,7 @@
 
     <TextView
         android:id="@+id/textViewPresure"
+        style="@style/styleValToka"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -107,20 +108,8 @@
         app:layout_constraintVertical_bias="0.631" />
 
     <TextView
-        android:id="@+id/textViewCount"
-
-        style="@style/styleValToka"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:text="0.00"
-        app:layout_constraintBottom_toBottomOf="@+id/textViewPresSet"
-        app:layout_constraintStart_toEndOf="@+id/textViewPresSet"
-        app:layout_constraintTop_toBottomOf="@+id/textViewHysteresis"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
         android:id="@+id/textViewOnOff"
+        style="@style/styleValToka"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -131,20 +120,8 @@
         app:layout_constraintVertical_bias="0.375" />
 
     <TextView
-        android:id="@+id/textViewHysteresis"
-
-        style="@style/styleValToka"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:text="0.00"
-        app:layout_constraintBottom_toBottomOf="@+id/textViewHysSet"
-        app:layout_constraintStart_toEndOf="@+id/textViewHysSet"
-        app:layout_constraintTop_toTopOf="@+id/textViewHysSet"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <TextView
         android:id="@+id/textViewRalyOnOff"
+        style="@style/styleValToka"
         android:layout_width="61dp"
         android:layout_height="21dp"
         android:layout_marginStart="20dp"
@@ -156,6 +133,7 @@
 
     <TextView
         android:id="@+id/textViewSensorStatus"
+        style="@style/styleValToka"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -167,6 +145,7 @@
 
     <TextView
         android:id="@+id/textViewTemperature"
+        style="@style/styleValToka"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -179,20 +158,18 @@
         android:id="@+id/imageView"
         android:layout_width="31dp"
         android:layout_height="57dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="28dp"
         app:layout_constraintStart_toStartOf="@+id/imageView2"
-        app:layout_constraintTop_toBottomOf="@+id/textViewPresSet"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2"
         app:srcCompat="@drawable/temp" />
 
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="31dp"
         android:layout_height="57dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView"
         app:layout_constraintStart_toStartOf="@+id/imageView3"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/lampoff" />
+        app:srcCompat="@drawable/lampoff"
+        tools:layout_editor_absoluteY="221dp" />
 
     <ImageView
         android:id="@+id/imageView3"
@@ -231,10 +208,12 @@
         style="@style/styleValToka"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginEnd="52dp"
         android:text="HysSet"
-        app:layout_constraintStart_toStartOf="@+id/imageView2"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        app:layout_constraintBottom_toBottomOf="@+id/imageButtonHysteresisDown"
+        app:layout_constraintEnd_toStartOf="@+id/imageButtonHysteresisDown"
+        app:layout_constraintTop_toTopOf="@+id/imageButtonHysteresisDown"
+        app:layout_constraintVertical_bias="0.518" />
 
     <TextView
         android:id="@+id/textViewPresSet"
@@ -242,10 +221,10 @@
         style="@style/styleValToka"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="44dp"
         android:text="PresSet"
-        app:layout_constraintStart_toStartOf="@+id/imageView2"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        app:layout_constraintBottom_toBottomOf="@+id/imageButtonPressureDown"
+        app:layout_constraintStart_toStartOf="@+id/textViewHysSet"
+        app:layout_constraintTop_toTopOf="@+id/imageButtonPressureDown" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
