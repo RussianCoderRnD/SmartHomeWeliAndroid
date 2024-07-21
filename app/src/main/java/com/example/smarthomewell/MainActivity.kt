@@ -1,90 +1,89 @@
-package com.example.smarthomewell
+package com.example.smarthomewell // Определение пакета, к которому принадлежит класс
 
-// 20.07.2024 Lugovik O.V.
-import androidx.activity.enableEdgeToEdge
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import android.widget.Button
-import okhttp3.*
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.RequestBody.Companion.toRequestBody
-import java.util.concurrent.TimeUnit
-import kotlin.random.Random
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.os.Bundle // Импортируем класс Bundle, который используется для передачи данных между компонентами Android
-import android.widget.ImageButton // Импортируем класс ImageButton, который используется для создания кнопок с изображениями
-import android.widget.ImageView // Импортируем класс ImageView, который используется для отображения изображений
-import android.widget.TextView // Импортируем класс TextView, который используется для отображения текста
-import androidx.appcompat.app.AppCompatActivity // Импортируем класс AppCompatActivity, который является базовым классом для активностей, использующих современные компоненты Android
-import kotlinx.coroutines.CoroutineScope // Импортируем класс CoroutineScope, который используется для запуска корутин
-import kotlinx.coroutines.Dispatchers // Импортируем класс Dispatchers, который предоставляет диспетчеры для корутин
-import kotlinx.coroutines.launch // Импортируем функцию launch, которая запускает новую корутину
-import okhttp3.OkHttpClient // Импортируем класс OkHttpClient, который используется для выполнения HTTP-запросов
-import okhttp3.Request // Импортируем класс Request, который представляет HTTP-запрос
-import okhttp3.Response // Импортируем класс Response, который представляет HTTP-ответ
-import org.json.JSONObject // Импортируем класс JSONObject, который используется для работы с JSON-данными
-import android.content.pm.ActivityInfo // Импортируем класс ActivityInfo, который содержит информацию о конфигурации активности
-import android.os.Handler // Импортируем класс Handler, который позволяет отправлять и обрабатывать сообщения и выполняемые объекты, связанные с потоком
-import android.os.Looper // Импортируем класс Looper, который предоставляет цикл событий для обработки сообщений
-import android.view.View // Импортируем класс View, который является базовым классом для всех визуальных элементов в Android
-import java.io.IOException // Импортируем класс IOException, который используется для обработки ошибок ввода-вывода
-import android.content.Intent // Импортируем класс Intent, который используется для запуска новых активностей или служб и передачи данных между компонентами
-import okhttp3.MediaType.Companion.toMediaTypeOrNull // Импортируем метод расширения toMediaTypeOrNull, который преобразует строку в объект MediaType или возвращает null, если преобразование не удалось
-import okhttp3.RequestBody.Companion.toRequestBody // Импортируем метод расширения toRequestBody, который преобразует строку или массив байтов в объект RequestBody
-import android.widget.Toast
-import android.graphics.Color
-import android.util.Log
+// 20.07.2024 Lugovik O.V. // Дата и автор комментария
+
+import androidx.activity.enableEdgeToEdge // Импорт функции для активации режима без краёв
+import androidx.core.view.ViewCompat // Импорт класса для работы с совместимостью представлений
+import androidx.core.view.WindowInsetsCompat // Импорт класса для работы с отступами окон
+import android.widget.Button // Импорт класса Button для создания кнопок
+import okhttp3.* // Импорт всего пакета okhttp3 для работы с HTTP-запросами
+import okhttp3.MediaType.Companion.toMediaTypeOrNull // Импорт метода расширения для преобразования строки в MediaType
+import okhttp3.RequestBody.Companion.toRequestBody // Импорт метода расширения для преобразования строки в RequestBody
+import java.util.concurrent.TimeUnit // Импорт класса для работы с единицами времени
+import kotlin.random.Random // Импорт класса для генерации случайных чисел
+import android.graphics.Bitmap // Импорт класса Bitmap для работы с изображениями
+import android.graphics.BitmapFactory // Импорт класса для создания Bitmap из различных источников
+import android.os.Bundle // Импорт класса Bundle для передачи данных между компонентами Android
+import android.widget.ImageButton // Импорт класса ImageButton для создания кнопок с изображениями
+import android.widget.ImageView // Импорт класса ImageView для отображения изображений
+import android.widget.TextView // Импорт класса TextView для отображения текста
+import androidx.appcompat.app.AppCompatActivity // Импорт класса AppCompatActivity для создания активности с поддержкой старых версий Android
+import kotlinx.coroutines.CoroutineScope // Импорт класса CoroutineScope для запуска корутин
+import kotlinx.coroutines.Dispatchers // Импорт класса Dispatchers для указания контекста корутины
+import kotlinx.coroutines.launch // Импорт функции launch для запуска корутин
+import okhttp3.OkHttpClient // Импорт класса OkHttpClient для выполнения HTTP-запросов
+import okhttp3.Request // Импорт класса Request для представления HTTP-запросов
+import okhttp3.Response // Импорт класса Response для представления HTTP-ответов
+import org.json.JSONObject // Импорт класса JSONObject для работы с JSON-данными
+import android.content.pm.ActivityInfo // Импорт класса ActivityInfo для информации о конфигурации активности
+import android.os.Handler // Импорт класса Handler для обработки сообщений и задач
+import android.os.Looper // Импорт класса Looper для работы с циклами сообщений
+import android.view.View // Импорт класса View для базовых визуальных элементов в Android
+import java.io.IOException // Импорт класса IOException для обработки ошибок ввода-вывода
+import android.content.Intent // Импорт класса Intent для запуска новых активностей или служб
+import android.widget.Toast // Импорт класса Toast для отображения всплывающих сообщений
+import android.graphics.Color // Импорт класса Color для работы с цветами
+import android.util.Log // Импорт класса Log для ведения журнала
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 
 var jsonString = "" // Глобальная переменная для хранения JSON строки
-var count = 0 // установленная температура
-var memHysteresis = 0
-var menPressure = 0
-var counPower = 0
+var count = 0 // Глобальная переменная для хранения температуры
+var memHysteresis = 0 // Глобальная переменная для хранения гистерезиса
+var menPressure = 0 // Глобальная переменная для хранения давления
+var counPower = 0 // Глобальная переменная для хранения мощности
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity() { // Определение класса MainActivity, который наследует от AppCompatActivity
 
     // Инициализация переменных для значений JSON объекта
-    private var countHys: Double = 0.0
-    private var countPres: Double = 0.0
+    private var countHys: Double = 0.0 // Переменная для хранения значения гистерезиса
+    private var countPres: Double = 0.0 // Переменная для хранения значения давления
 
     // Создаем клиент OkHttp
-    private val client = OkHttpClient()
+    private val client = OkHttpClient() // Инициализация клиента для выполнения HTTP-запросов
 
     companion object {
         // Статические URL для вашего ESP8266
-        const val espUrlExo = "http://192.168.4.10/"
-        const val espUrlOnOff = "http://192.168.4.10/onoff"
-        const val espUrlRes = "http://192.168.4.10/res"
-        const val espUrlCount = "http://192.168.4.10/count"
-        const val espUrlHysteresis = "http://192.168.4.10/hysteresis"
+        const val espUrlExo = "http://192.168.4.10/" // URL для основного ресурса
+        const val espUrlOnOff = "http://192.168.4.10/onoff" // URL для включения/выключения
+        const val espUrlRes = "http://192.168.4.10/res" // URL для получения данных
+        const val espUrlCount = "http://192.168.4.10/count" // URL для работы с параметром count
+        const val espUrlHysteresis = "http://192.168.4.10/hysteresis" // URL для работы с параметром hysteresis
 
-        // Объявляем и инициализируем переменные для хранения значений параметров
-        private var PR: Double = 0.0
-        private var COUNT: Double = 0.0
-        private var onoff: Boolean = false
-        private var HYSTERESIS: Double = 0.0
-        private var RelayOnOff: Boolean = false
-        private var DS18B20_sensor_status: Boolean = false
-        private var DS18B20_temperature: Double = 0.0
-
-        private var ONOFF: Boolean = false
+        private var PR: Double = 0.0 // Переменная для значения PR
+        private var COUNT: Double = 0.0 // Переменная для значения COUNT
+        private var onoff: Boolean = false // Переменная для значения включено/выключено
+        private var HYSTERESIS: Double = 0.0 // Переменная для значения гистерезиса
+        private var RelayOnOff: Boolean = false // Переменная для значения реле включено/выключено
+        private var DS18B20_sensor_status: Boolean = false // Переменная для статуса датчика DS18B20
+        private var DS18B20_temperature: Double = 0.0 // Переменная для температуры датчика DS18B20
+        private var ONOFF: Boolean = false // Переменная для значения включено/выключено
     }
 
-    private lateinit var textViewVarHys: TextView // Объявление переменной для TextView
-    private lateinit var textViewVarPres: TextView // Объявление переменной для TextView
-    private lateinit var textViewHysPomp: TextView // Объявление переменной для TextView
-    private lateinit var textViewPressPomp: TextView // Объявление переменной для TextView
-
-    private lateinit var textViewPresure: TextView // Объявление переменной для TextView
-    private lateinit var textViewCount: TextView // Объявление переменной для TextView
-    private lateinit var textViewOnOff: TextView // Объявление переменной для TextView
-    private lateinit var textViewHysteresis: TextView // Объявление переменной для TextView
-    private lateinit var textViewTemperature: TextView // Объявление переменной для TextView
-    private lateinit var textViewSensorStatus: TextView // Объявление переменной для TextView
-    private lateinit var textViewRalyOnOff: TextView // Объявление переменной для TextView
-
-
+    private lateinit var textViewVarHys: TextView // Переменная для TextView гистерезиса
+    private lateinit var textViewVarPres: TextView // Переменная для TextView давления
+    private lateinit var textViewHysPomp: TextView // Переменная для TextView гистерезиса насоса
+    private lateinit var textViewPressPomp: TextView // Переменная для TextView давления насоса
+    private lateinit var textViewPresure: TextView // Переменная для TextView давления
+    private lateinit var textViewCount: TextView // Переменная для TextView счетчика
+    private lateinit var textViewOnOff: TextView // Переменная для TextView включено/выключено
+    private lateinit var textViewHysteresis: TextView // Переменная для TextView гистерезиса
+    private lateinit var textViewTemperature: TextView // Переменная для TextView температуры
+    private lateinit var textViewSensorStatus: TextView // Переменная для TextView статуса датчика
+    private lateinit var textViewRalyOnOff: TextView // Переменная для TextView включено/выключено реле
+    private lateinit var imageView2: ImageView
+    private lateinit var imageView3: ImageView
+    private lateinit var imageView4: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -103,7 +102,6 @@ class MainActivity : AppCompatActivity() {
         actionBar?.hide()
 
         enableEdgeToEdge()
-        setContentView(R.layout.activity_main)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -123,7 +121,9 @@ class MainActivity : AppCompatActivity() {
         textViewSensorStatus = findViewById(R.id.textViewSensorStatus)
         textViewRalyOnOff = findViewById(R.id.textViewRalyOnOff)
 
-
+        imageView4 = findViewById(R.id.imageView4)
+        imageView3 = findViewById(R.id.imageView3)
+        imageView2 = findViewById(R.id.imageView2)
 
         findViewById<ImageButton>(R.id.imageButtonSave).setOnClickListener {
             print("imageButtonSave ")
@@ -139,6 +139,8 @@ class MainActivity : AppCompatActivity() {
             ONOFF(ONOFF) // Отправляем новое значение на сервер
         }
 
+
+
         findViewById<ImageButton>(R.id.imageButtonHysteresisDown).setOnClickListener {
             countHys=countHys-0.01
             if (countHys <= 0.0) countHys = 0.0
@@ -146,7 +148,7 @@ class MainActivity : AppCompatActivity() {
             textViewVarHys.text = "$countHys"
             print("countHys ")
             println(countHys)
-            countHys()
+            sendDataToServer("hysteresis", "hysteresis", countHys.toString())
         }
 
         findViewById<ImageButton>(R.id.imageButtonHysteresisUp).setOnClickListener {
@@ -155,7 +157,7 @@ class MainActivity : AppCompatActivity() {
             textViewVarHys.text = "$countHys"
             print("countHys ")
             println(countHys)
-            countHys()
+            sendDataToServer("hysteresis", "hysteresis", countHys.toString())
         }
 
         findViewById<ImageButton>(R.id.imageButtonPressureDown).setOnClickListener {
@@ -166,7 +168,7 @@ class MainActivity : AppCompatActivity() {
             textViewVarPres.text = "$countPres"
             print("countPres ")
             println(countPres)
-            countPres()
+            sendDataToServer("count", "count", countPres.toString())
         }
 
         findViewById<ImageButton>(R.id.imageButtonPressureUp).setOnClickListener {
@@ -175,49 +177,37 @@ class MainActivity : AppCompatActivity() {
             textViewVarPres.text = "$countPres"
             print("countPres ")
             println(countPres)
-            countPres()
-
+            sendDataToServer("count", "count", countPres.toString())
         }
     }
 
     /************************************/
     // Функция для запроса данных с сервера
     private fun fetchDataFromServer() {
-        // Выполняем сетевой запрос в корутине
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                // Выполняем запрос к серверу
                 val response = get("http://192.168.4.10/res")
-
-                // Проверяем успешность ответа
                 if (response.isSuccessful) {
-                    // Получаем тело ответа в виде строки
                     val responseBody = response.body?.string()
-
-                    // Парсим JSON и обновляем UI в основном потоке
                     responseBody?.let { json ->
                         runOnUiThread {
                             parseJsonAndAssignValues(json)
-                            // Добавляем сообщение или уведомление об успешном получении ответа
-                            //showToast("Данные успешно получены с сервера")
+                            showToast("Данные успешно получены с сервера")
                         }
                     }
                 } else {
-                    // Показываем сообщение об ошибке, если сервер вернул неудачный ответ
                     runOnUiThread {
-                        println("Server returned error: ${response.code}")
-                        showToast("Server returned error: ${response.code}")
+                        showToast("Ошибка от сервера: ${response.code}")
                     }
                 }
             } catch (e: IOException) {
-                // Показываем сообщение об ошибке в случае исключения
                 runOnUiThread {
-                    showToast("IOException occurred: ${e.message}")
-                    println("IOException occurred: ${e.message}")
+                    showToast("Ошибка ввода-вывода: ${e.message}")
                 }
             }
         }
     }
+
     /*************************/
     // Функция для парсинга JSON и присвоения значений переменным
     private fun parseJsonAndAssignValues(jsonString: String) {
@@ -239,6 +229,7 @@ class MainActivity : AppCompatActivity() {
             textViewSensorStatus.text = "$DS18B20_sensor_status"
             textViewTemperature.text = "$DS18B20_temperature"
 
+
             // Выводим каждое значение в новой строке для улучшения читаемости
             println("""
             PR: $PR
@@ -249,7 +240,9 @@ class MainActivity : AppCompatActivity() {
             DS18B20_sensor_status: $DS18B20_sensor_status
             DS18B20_temperature: $DS18B20_temperature
         """.trimIndent())
-
+                    if (DS18B20_sensor_status) {imageView4.setImageResource(R.drawable.lampon)} else {imageView4.setImageResource(R.drawable.lampoff)}
+                    if (RelayOnOff) {imageView3.setImageResource(R.drawable.lampon)} else {imageView3.setImageResource(R.drawable.lampoff)}
+                    if (ONOFF) {imageView2.setImageResource(R.drawable.lampon)} else {imageView2.setImageResource(R.drawable.lampoff)}
         } catch (e: Exception) {
             e.printStackTrace()
             println("Exception occurred while parsing JSON: ${e.message}")
@@ -262,59 +255,6 @@ class MainActivity : AppCompatActivity() {
         Toast.makeText(this@MainActivity, message, Toast.LENGTH_SHORT).show()
     }
 
-    // Функция для отправки текущего значения счетчика на сервер
-    private fun countPres() {
-        // Определяем функцию COUNT
-        CoroutineScope(Dispatchers.IO).launch {
-            // Запускаем корутину в диспетчере IO
-            try {
-                // Оборачиваем код в блок try для обработки возможных исключений
-                val url = "http://192.168.4.10/count?count=$countPres"
-                // Формируем URL для отправки запроса на сервер с параметром count
-                val response = get(url)
-                // Выполняем HTTP-запрос по указанному URL и получаем ответ
-                if (response.isSuccessful) {
-                    // Проверяем, успешен ли ответ
-                    println("Count sent successfully: $countPres")
-                    // Выводим в консоль сообщение о успешной отправке count
-                } else {
-                    // Если ответ не успешен, выводим код и сообщение об ошибке в консоль
-                    println("Failed to send count: ${response.code} ${response.message}")
-                }
-            } catch (e: IOException) {
-                // Обрабатываем исключения IOException
-                e.printStackTrace()
-                println("IOException occurred: ${e.message}")
-            }
-        }
-    }
-
-    // Функция для отправки текущего значения счетчика на сервер
-    private fun countHys() {
-        // Определяем функцию COUNT
-        CoroutineScope(Dispatchers.IO).launch {
-            // Запускаем корутину в диспетчере IO
-            try {
-                // Оборачиваем код в блок try для обработки возможных исключений
-                val url = "http://192.168.4.10/hysteresis?hysteresis=$countHys"
-                // Формируем URL для отправки запроса на сервер с параметром count
-                val response = get(url)
-                // Выполняем HTTP-запрос по указанному URL и получаем ответ
-                if (response.isSuccessful) {
-                    // Проверяем, успешен ли ответ
-                    println("Count sent successfully: $countHys")
-                    // Выводим в консоль сообщение о успешной отправке count
-                } else {
-                    // Если ответ не успешен, выводим код и сообщение об ошибке в консоль
-                    println("Failed to send count: ${response.code} ${response.message}")
-                }
-            } catch (e: IOException) {
-                // Обрабатываем исключения IOException
-                e.printStackTrace()
-                println("IOException occurred: ${e.message}")
-            }
-        }
-    }
 
     // Функция для отправки текущего значения счетчика на сервер
     private fun ONOFF(onoff: Boolean) {
@@ -335,7 +275,6 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-
     // Функция для выполнения GET запроса
     @Throws(IOException::class)
     private fun get(url: String): Response {
@@ -346,6 +285,23 @@ class MainActivity : AppCompatActivity() {
             .build()
         println("Sending GET request to $url") // Выводим в консоль информацию о том, что отправляем GET-запрос
         return client.newCall(request).execute() // Выполняем запрос и возвращаем результат в виде объекта Response
+    }
+
+    private fun sendDataToServer(endpoint: String, paramName: String, paramValue: String) {
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val url = "http://192.168.4.10/$endpoint?$paramName=$paramValue"
+                val response = get(url)
+                if (response.isSuccessful) {
+                    println("$paramName sent successfully: $paramValue")
+                } else {
+                    println("Failed to send $paramName: ${response.code} ${response.message}")
+                }
+            } catch (e: IOException) {
+                e.printStackTrace()
+                println("IOException occurred: ${e.message}")
+            }
+        }
     }
 
 }
