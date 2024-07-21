@@ -231,9 +231,6 @@ class MainActivity : AppCompatActivity() {
             DS18B20_sensor_status = jsonObject.getBoolean("DS18B20_sensor_status")
             DS18B20_temperature = jsonObject.getDouble("DS18B20_temperature")
 
-            textViewPressPomp.text = "$HYSTERESIS"
-            textViewHysPomp.text = "$COUNT"
-
             textViewPresure.text = "$PR"
             textViewCount.text = "$COUNT"
             textViewOnOff.text = "$onoff"
