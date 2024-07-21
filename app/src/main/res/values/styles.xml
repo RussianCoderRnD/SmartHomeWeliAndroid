@@ -38,10 +38,21 @@
         <item name="android:layout_height">38dp</item>
         <item name="android:textSize">20dp</item>
         <item name="android:textColor">@color/Blue</item>
-<!--        <item name="android:textStyle">bold</item>-->
+        <!--        <item name="android:textStyle">bold</item>-->
         <item name="android:gravity">center</item>
         <item name="android:layout_marginStart">5dp</item>
         <item name="android:layout_marginTop">0dp</item>
+        <item name="android:background">@null</item>
+    </style>
+
+    <!-- Стиль для styleNameLine -->
+    <style name="styleButton" parent="TextAppearance.AppCompat">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/Blue</item>
+        <item name="android:scaleType">centerInside</item>
+        <!--        <item name="android:textStyle">bold</item>-->
+        <item name="android:gravity">center</item>
         <item name="android:background">@null</item>
     </style>
 
@@ -54,6 +65,8 @@
         <item name="android:layout_marginEnd">10dp</item>
         <item name="android:background">@null</item>
     </style>
+
+
 
     <!-- Стиль для Batt -->
     <style name="styleBatt" parent="TextAppearance.AppCompat">

@@ -45,8 +45,8 @@ var counPower = 0
 class MainActivity : AppCompatActivity() {
 
     // Инициализация переменных для значений JSON объекта
-    private var countHys: Int = 0
-    private var countPres: Int = 0
+    private var countHys: Double = 0.0
+    private var countPres: Double = 0.0
 
     // Создаем клиент OkHttp
     private val client = OkHttpClient()
@@ -114,8 +114,6 @@ class MainActivity : AppCompatActivity() {
         textViewVarHys = findViewById(R.id.textViewVarHys)
         textViewVarPres = findViewById(R.id.textViewVarPres)
         textViewOnOff = findViewById(R.id.textViewOnOff)
-        textViewHysPomp = findViewById(R.id.textViewHysPomp)
-        textViewPressPomp = findViewById(R.id.textViewPressPomp)
 
         textViewPresure = findViewById(R.id.textViewPresure)
         textViewCount = findViewById(R.id.textViewCount)
@@ -128,7 +126,6 @@ class MainActivity : AppCompatActivity() {
 
 
         findViewById<ImageButton>(R.id.imageButtonSave).setOnClickListener {
-            textViewVarHys.text = "imageButtonSave"
             print("imageButtonSave ")
             fetchDataFromServer()
         }
@@ -143,8 +140,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         findViewById<ImageButton>(R.id.imageButtonHysteresisDown).setOnClickListener {
-            countHys--
-            if (countHys <= 0) countHys = 0
+            countHys=countHys-0.01
+            if (countHys <= 0.0) countHys = 0.0
             // Установка значения переменной в TextView
             textViewVarHys.text = "$countHys"
             print("countHys ")
@@ -153,7 +150,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         findViewById<ImageButton>(R.id.imageButtonHysteresisUp).setOnClickListener {
-            countHys++
+            countHys=countHys+0.01
             // Установка значения переменной в TextView
             textViewVarHys.text = "$countHys"
             print("countHys ")
@@ -162,8 +159,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         findViewById<ImageButton>(R.id.imageButtonPressureDown).setOnClickListener {
-            countPres--
-            if (countPres <= 0) countPres = 0
+
+            countPres=countPres-0.01
+            if (countPres <= 0.0) countPres = 0.0
             // Установка значения переменной в TextView
             textViewVarPres.text = "$countPres"
             print("countPres ")
@@ -172,7 +170,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         findViewById<ImageButton>(R.id.imageButtonPressureUp).setOnClickListener {
-            countPres++
+            countPres=countPres+0.01
             // Установка значения переменной в TextView
             textViewVarPres.text = "$countPres"
             print("countPres ")

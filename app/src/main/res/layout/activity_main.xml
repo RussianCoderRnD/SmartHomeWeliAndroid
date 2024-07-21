@@ -5,61 +5,69 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/White"
     tools:context=".MainActivity">
 
     <ImageButton
         android:id="@+id/imageButtonHysteresisDown"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
-        android:layout_marginEnd="276dp"
+        style="@style/styleButton"
+        android:layout_width="81dp"
+        android:layout_height="69dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="244dp"
+        android:background="@null"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/arrow_down_float" />
+        app:srcCompat="@drawable/down" />
 
     <ImageButton
         android:id="@+id/imageButtonPressureUp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/styleButton"
+        android:layout_width="81dp"
+        android:layout_height="69dp"
         app:layout_constraintStart_toStartOf="@+id/imageButtonHysteresisUp"
         app:layout_constraintTop_toTopOf="@+id/imageButtonPressureDown"
-        app:srcCompat="@android:drawable/arrow_up_float" />
+        app:srcCompat="@drawable/up" />
 
     <ImageButton
         android:id="@+id/imageButtonPressureDown"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="112dp"
+        style="@style/styleButton"
+        android:layout_width="81dp"
+        android:layout_height="69dp"
+        android:layout_marginTop="136dp"
         app:layout_constraintStart_toStartOf="@+id/imageButtonHysteresisDown"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/arrow_down_float" />
+        app:srcCompat="@drawable/down" />
 
     <ImageButton
         android:id="@+id/imageButtonHysteresisUp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
-        android:layout_marginEnd="100dp"
+        style="@style/styleButton"
+        android:layout_width="81dp"
+        android:layout_height="69dp"
+        android:layout_marginEnd="32dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/arrow_up_float" />
+        app:layout_constraintTop_toTopOf="@+id/imageButtonHysteresisDown"
+        app:srcCompat="@drawable/up" />
 
     <ImageButton
         android:id="@+id/imageButtonPowerOnOff"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="192dp"
-        android:layout_marginBottom="32dp"
+        style="@style/styleButton"
+        android:layout_width="94dp"
+        android:layout_height="85dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="28dp"
+        android:background="@null"
+        android:scaleType="centerInside"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@android:drawable/alert_dark_frame" />
+        app:srcCompat="@drawable/on" />
 
     <TextView
         android:id="@+id/textViewVarHys"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:text="0"
+        android:layout_marginStart="56dp"
+        android:text="0.00"
         app:layout_constraintStart_toEndOf="@+id/imageButtonHysteresisDown"
         app:layout_constraintTop_toTopOf="@+id/imageButtonHysteresisDown" />
 
@@ -67,38 +75,21 @@
         android:id="@+id/textViewVarPres"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:text="0"
+        android:layout_marginStart="56dp"
+        android:text="0.00"
         app:layout_constraintStart_toEndOf="@+id/imageButtonPressureDown"
         app:layout_constraintTop_toTopOf="@+id/imageButtonPressureDown" />
 
     <ImageButton
         android:id="@+id/imageButtonSave"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="184dp"
-        android:layout_marginEnd="192dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/checkbox_on_background" />
-
-    <TextView
-        android:id="@+id/textViewHysPomp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="64dp"
-        android:text="HysPomp"
-        app:layout_constraintEnd_toStartOf="@+id/imageButtonHysteresisDown"
-        app:layout_constraintTop_toTopOf="@+id/imageButtonHysteresisDown" />
-
-    <TextView
-        android:id="@+id/textViewPressPomp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="52dp"
-        android:text="PressPomp"
-        app:layout_constraintEnd_toStartOf="@+id/imageButtonPressureDown"
-        app:layout_constraintTop_toTopOf="@+id/imageButtonPressureDown" />
+        style="@style/styleButton"
+        android:layout_width="77dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="48dp"
+        app:layout_constraintEnd_toEndOf="@+id/imageButtonPressureUp"
+        app:layout_constraintStart_toStartOf="@+id/imageButtonPressureDown"
+        app:layout_constraintTop_toBottomOf="@+id/imageButtonPressureDown"
+        app:srcCompat="@drawable/set" />
 
     <TextView
         android:id="@+id/textViewPresure"
