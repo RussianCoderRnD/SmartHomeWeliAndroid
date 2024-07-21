@@ -7,36 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/textViewHysteresis"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="196dp"
-        android:layout_marginBottom="10dp"
-        android:text="hysteresis"
-        app:layout_constraintBottom_toTopOf="@+id/imageButtonHysteresisDown"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <TextView
-        android:id="@+id/textViewPressure"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="200dp"
-        android:layout_marginBottom="10dp"
-        android:text="pressure"
-        app:layout_constraintBottom_toTopOf="@+id/imageButtonPressureDown"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <TextView
-        android:id="@+id/textViewOnOff"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="256dp"
-        android:layout_marginEnd="196dp"
-        android:text="onn / off"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <ImageButton
         android:id="@+id/imageButtonHysteresisDown"
         android:layout_width="wrap_content"
@@ -129,5 +99,71 @@
         android:text="PressPomp"
         app:layout_constraintEnd_toStartOf="@+id/imageButtonPressureDown"
         app:layout_constraintTop_toTopOf="@+id/imageButtonPressureDown" />
+
+    <TextView
+        android:id="@+id/textViewPresure"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="60dp"
+        android:text="Pressure"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Count"
+        app:layout_constraintStart_toStartOf="@+id/textViewPresure"
+        app:layout_constraintTop_toBottomOf="@+id/textViewPresure" />
+
+    <TextView
+        android:id="@+id/textViewOnOff"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="ONOFF"
+        app:layout_constraintStart_toStartOf="@+id/textViewPresure"
+        app:layout_constraintTop_toBottomOf="@+id/textViewCount" />
+
+    <TextView
+        android:id="@+id/textViewHysteresis"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="16dp"
+        android:text="Hysteresis"
+        app:layout_constraintStart_toStartOf="@+id/textViewPresure"
+        app:layout_constraintTop_toBottomOf="@+id/textViewOnOff" />
+
+    <TextView
+        android:id="@+id/textViewRalyOnOff"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="24dp"
+        android:text="RalyOnOff"
+        app:layout_constraintStart_toStartOf="@+id/textViewPresure"
+        app:layout_constraintTop_toBottomOf="@+id/textViewHysteresis" />
+
+    <TextView
+        android:id="@+id/textViewSensorStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="SensorStatus"
+        app:layout_constraintStart_toStartOf="@+id/textViewPresure"
+        app:layout_constraintTop_toBottomOf="@+id/textViewRalyOnOff" />
+
+    <TextView
+        android:id="@+id/textViewTemperature"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:text="Temperature"
+        app:layout_constraintStart_toStartOf="@+id/textViewPresure"
+        app:layout_constraintTop_toBottomOf="@+id/textViewSensorStatus" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

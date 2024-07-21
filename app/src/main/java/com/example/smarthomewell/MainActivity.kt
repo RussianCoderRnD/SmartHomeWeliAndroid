@@ -60,20 +60,31 @@ class MainActivity : AppCompatActivity() {
         const val espUrlHysteresis = "http://192.168.4.10/hysteresis"
 
         // Объявляем и инициализируем переменные для хранения значений параметров
-        private var PR: Double = 0.0 // Значение параметра LG
-        private var COUNT: Double = 0.0 // Значение параметра PG
-        private var ONOFF: Int = 0// Значение параметра LP
-        private var HYSTERESIS: Double = 0.0 // Значение параметра PP
-        private var RelayOnOff: Double = 0.0 // Значение параметра STOP
-        private var DS18B20_sensor_status: Double = 0.0 // Значение параметра ZX
-        private var DS18B20_temperature: Double = 0.0 // Значение параметра FOG
+        private var PR: Double = 0.0
+        private var COUNT: Double = 0.0
+        private var onoff: Boolean = false
+        private var HYSTERESIS: Double = 0.0
+        private var RelayOnOff: Boolean = false
+        private var DS18B20_sensor_status: Boolean = false
+        private var DS18B20_temperature: Double = 0.0
+
+        private var ONOFF: Boolean = false
     }
 
     private lateinit var textViewVarHys: TextView // Объявление переменной для TextView
     private lateinit var textViewVarPres: TextView // Объявление переменной для TextView
-    private lateinit var textViewOnOff: TextView // Объявление переменной для TextView
     private lateinit var textViewHysPomp: TextView // Объявление переменной для TextView
     private lateinit var textViewPressPomp: TextView // Объявление переменной для TextView
+
+    private lateinit var textViewPresure: TextView // Объявление переменной для TextView
+    private lateinit var textViewCount: TextView // Объявление переменной для TextView
+    private lateinit var textViewOnOff: TextView // Объявление переменной для TextView
+    private lateinit var textViewHysteresis: TextView // Объявление переменной для TextView
+    private lateinit var textViewTemperature: TextView // Объявление переменной для TextView
+    private lateinit var textViewSensorStatus: TextView // Объявление переменной для TextView
+    private lateinit var textViewRalyOnOff: TextView // Объявление переменной для TextView
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -106,13 +117,29 @@ class MainActivity : AppCompatActivity() {
         textViewHysPomp = findViewById(R.id.textViewHysPomp)
         textViewPressPomp = findViewById(R.id.textViewPressPomp)
 
+        textViewPresure = findViewById(R.id.textViewPresure)
+        textViewCount = findViewById(R.id.textViewCount)
+        textViewOnOff = findViewById(R.id.textViewOnOff)
+        textViewHysteresis = findViewById(R.id.textViewHysteresis)
+        textViewTemperature = findViewById(R.id.textViewTemperature)
+        textViewSensorStatus = findViewById(R.id.textViewSensorStatus)
+        textViewRalyOnOff = findViewById(R.id.textViewRalyOnOff)
+
+
+
+        findViewById<ImageButton>(R.id.imageButtonSave).setOnClickListener {
+            textViewVarHys.text = "imageButtonSave"
+            print("imageButtonSave ")
+            fetchDataFromServer()
+        }
+
+        // Обновите setOnClickListener для кнопки
         findViewById<ImageButton>(R.id.imageButtonPowerOnOff).setOnClickListener {
-            ONOFF = if (ONOFF == 1) 0 else 1
+            ONOFF = !ONOFF // Меняем значение на противоположное
             // Установка значения переменной в TextView
-            textViewVarHys.text = "$ONOFF"
-            print("ONOFF ")
-            println(ONOFF)
-            ONOFF()
+            textViewVarHys.text = if (ONOFF) "1" else "0"
+            println("ONOFF: $ONOFF")
+            ONOFF(ONOFF) // Отправляем новое значение на сервер
         }
 
         findViewById<ImageButton>(R.id.imageButtonHysteresisDown).setOnClickListener {
@@ -197,26 +224,44 @@ class MainActivity : AppCompatActivity() {
     // Функция для парсинга JSON и присвоения значений переменным
     private fun parseJsonAndAssignValues(jsonString: String) {
         try {
-            // Создаем объект JSON из строки
             val jsonObject = JSONObject(jsonString)
-            // Извлекаем значения параметров из JSON-объекта и присваиваем их соответствующим переменным
-            PR = jsonObject.getDouble("PR") // Получаем значение для LG
-            COUNT = jsonObject.getDouble("COUNT") // Получаем значение для PG
-            ONOFF = jsonObject.getInt("ONOFF") // Получаем значение для LP
-            HYSTERESIS = jsonObject.getDouble("HYSTERESIS") // Получаем значение для PP
-            RelayOnOff = jsonObject.getDouble("RelayOnOff") // Получаем значение для STOP
-            DS18B20_sensor_status = jsonObject.getDouble("DS18B20_sensor_status") // Получаем значение для ZX
-            DS18B20_temperature = jsonObject.getDouble("DS18B20_temperature") // Получаем значение для FOG
+            PR = jsonObject.getDouble("PR")
+            COUNT = jsonObject.getDouble("COUNT")
+            onoff = jsonObject.getBoolean("ONOFF") //ONOFF = if (jsonObject.getBoolean("ONOFF")) 1 else 0
+            HYSTERESIS = jsonObject.getDouble("HYSTERESIS")
+            RelayOnOff = jsonObject.getBoolean("RelayOnOff")
+            DS18B20_sensor_status = jsonObject.getBoolean("DS18B20_sensor_status")
+            DS18B20_temperature = jsonObject.getDouble("DS18B20_temperature")
 
+            textViewPressPomp.text = "$HYSTERESIS"
+            textViewHysPomp.text = "$COUNT"
 
-            textViewPressPomp.text="$HYSTERESIS"
-            textViewHysPomp.text="$COUNT"
-            println("PR: $PR, COUNT: $COUNT, ONOFF: $ONOFF, HYSTERESIS: $HYSTERESIS, RelayOnOff: $RelayOnOff, DS18B20_sensor_status: $DS18B20_sensor_status, DS18B20_temperature: $DS18B20_temperature")
+            textViewPresure.text = "$PR"
+            textViewCount.text = "$COUNT"
+            textViewOnOff.text = "$onoff"
+            textViewHysteresis.text = "$HYSTERESIS"
+            textViewRalyOnOff.text = "$RelayOnOff"
+            textViewSensorStatus.text = "$DS18B20_sensor_status"
+            textViewTemperature.text = "$DS18B20_temperature"
+
+            // Выводим каждое значение в новой строке для улучшения читаемости
+            println("""
+            PR: $PR
+            COUNT: $COUNT
+            ONOFF: $onoff
+            HYSTERESIS: $HYSTERESIS
+            RelayOnOff: $RelayOnOff
+            DS18B20_sensor_status: $DS18B20_sensor_status
+            DS18B20_temperature: $DS18B20_temperature
+        """.trimIndent())
+
         } catch (e: Exception) {
             e.printStackTrace()
             println("Exception occurred while parsing JSON: ${e.message}")
         }
     }
+
+
     // Функция для отображения всплывающего сообщения
     private fun showToast(message: String) {
         Toast.makeText(this@MainActivity, message, Toast.LENGTH_SHORT).show()
@@ -277,31 +322,25 @@ class MainActivity : AppCompatActivity() {
     }
 
     // Функция для отправки текущего значения счетчика на сервер
-    private fun ONOFF() {
-        // Определяем функцию COUNT
+    private fun ONOFF(onoff: Boolean) {
         CoroutineScope(Dispatchers.IO).launch {
-            // Запускаем корутину в диспетчере IO
             try {
-                // Оборачиваем код в блок try для обработки возможных исключений
-                val url = "http://192.168.4.10/onoff?onoff=$ONOFF"
-                // Формируем URL для отправки запроса на сервер с параметром count
+                val url = "http://192.168.4.10/onoff?onoff=${if (onoff) 1 else 0}"
                 val response = get(url)
-                // Выполняем HTTP-запрос по указанному URL и получаем ответ
                 if (response.isSuccessful) {
-                    // Проверяем, успешен ли ответ
-                    println("Count sent successfully: $ONOFF")
-                    // Выводим в консоль сообщение о успешной отправке count
+                    println("ONOFF sent successfully: $onoff")
                 } else {
-                    // Если ответ не успешен, выводим код и сообщение об ошибке в консоль
-                    println("Failed to send count: ${response.code} ${response.message}")
+                    println("Failed to send ONOFF: ${response.code} ${response.message}")
                 }
             } catch (e: IOException) {
-                // Обрабатываем исключения IOException
                 e.printStackTrace()
                 println("IOException occurred: ${e.message}")
             }
         }
     }
+
+
+
     // Функция для выполнения GET запроса
     @Throws(IOException::class)
     private fun get(url: String): Response {
