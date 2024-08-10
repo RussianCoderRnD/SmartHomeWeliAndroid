@@ -102,6 +102,16 @@ class MainActivity : AppCompatActivity() { // Определение класс�
         actionBar?.hide()
 
         enableEdgeToEdge()
+
+        // функция закрывает приложение по нажатию определённой картинки
+        val closeButton: ImageView = findViewById(R.id.imageButtonExit)
+        closeButton.setOnClickListener {
+            intent = Intent(applicationContext, MainActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP) // Удаляет все предыдущие активности из стека
+            intent.putExtra("EXIT", true)
+            startActivity(intent)
+        }
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -132,7 +142,7 @@ class MainActivity : AppCompatActivity() { // Определение класс�
         findViewById<ImageButton>(R.id.imageButtonPowerOnOff).setOnClickListener {
             ONOFF = !ONOFF // Меняем значение на противоположное
             // Установка значения переменной в TextView
-            textViewVarHys.text = if (ONOFF) "1" else "0"
+          //  textViewVarHys.text = if (ONOFF) "1" else "0"
             println("ONOFF: $ONOFF")
             ONOFF(ONOFF) // Отправляем новое значение на сервер
         }
@@ -140,42 +150,42 @@ class MainActivity : AppCompatActivity() { // Определение класс�
 
 
         findViewById<ImageButton>(R.id.imageButtonHysteresisDown).setOnClickListener {
-            countHys=countHys-0.01
-            if (countHys <= 0.0) countHys = 0.0
+            HYSTERESIS=HYSTERESIS-0.01
+            if (HYSTERESIS <= 0.0) HYSTERESIS = 0.0
             // Установка значения переменной в TextView
-            textViewVarHys.text = "$countHys"
-            print("countHys ")
-            println(countHys)
-            sendDataToServer("hysteresis", "hysteresis", countHys.toString())
+            textViewVarHys.text = "$HYSTERESIS"
+            print("HYSTERESIS ")
+            println(HYSTERESIS)
+            sendDataToServer("hysteresis", "hysteresis", HYSTERESIS.toString())
         }
 
         findViewById<ImageButton>(R.id.imageButtonHysteresisUp).setOnClickListener {
-            countHys=countHys+0.01
+            HYSTERESIS=HYSTERESIS+0.01
             // Установка значения переменной в TextView
-            textViewVarHys.text = "$countHys"
-            print("countHys ")
-            println(countHys)
-            sendDataToServer("hysteresis", "hysteresis", countHys.toString())
+            textViewVarHys.text = "$HYSTERESIS"
+            print("HYSTERESIS ")
+            println(HYSTERESIS)
+            sendDataToServer("hysteresis", "hysteresis", HYSTERESIS.toString())
         }
 
         findViewById<ImageButton>(R.id.imageButtonPressureDown).setOnClickListener {
 
-            countPres=countPres-0.01
-            if (countPres <= 0.0) countPres = 0.0
+            COUNT=COUNT-0.01
+            if (COUNT <= 0.0) COUNT = 0.0
             // Установка значения переменной в TextView
-            textViewVarPres.text = "$countPres"
-            print("countPres ")
-            println(countPres)
-            sendDataToServer("count", "count", countPres.toString())
+            textViewVarPres.text = "$COUNT"
+            print("COUNT ")
+            println(COUNT)
+            sendDataToServer("count", "count", COUNT.toString())
         }
 
         findViewById<ImageButton>(R.id.imageButtonPressureUp).setOnClickListener {
-            countPres=countPres+0.01
+            COUNT= COUNT+0.01
             // Установка значения переменной в TextView
-            textViewVarPres.text = "$countPres"
-            print("countPres ")
-            println(countPres)
-            sendDataToServer("count", "count", countPres.toString())
+            textViewVarPres.text = "$COUNT"
+            print("COUNT ")
+            println(COUNT)
+            sendDataToServer("count", "count", COUNT.toString())
         }
     }
 
@@ -214,17 +224,17 @@ class MainActivity : AppCompatActivity() { // Определение класс�
             PR = jsonObject.getDouble("PR")
             COUNT = jsonObject.getDouble("COUNT")
             onoff = jsonObject.getBoolean("ONOFF") //ONOFF = if (jsonObject.getBoolean("ONOFF")) 1 else 0
-            HYSTERESIS = jsonObject.getDouble("HYSTERESIS")
-            RelayOnOff = jsonObject.getBoolean("RelayOnOff")
+           HYSTERESIS = jsonObject.getDouble("HYSTERESIS")
+           RelayOnOff = jsonObject.getBoolean("RelayOnOff")
             DS18B20_sensor_status = jsonObject.getBoolean("DS18B20_sensor_status")
             DS18B20_temperature = jsonObject.getDouble("DS18B20_temperature")
 
             textViewPresure.text = "$PR"
-            textViewCount.text = "$COUNT"
+            textViewVarPres.text = "$COUNT"
             textViewOnOff.text = "$onoff"
-            textViewHysteresis.text = "$HYSTERESIS"
+          /* textViewVarHys.text = "$HYSTERESIS"*/
             textViewRalyOnOff.text = "$RelayOnOff"
-            textViewSensorStatus.text = "$DS18B20_sensor_status"
+          /*  textViewSensorStatus.text = "$DS18B20_sensor_status"*/
             textViewTemperature.text = "$DS18B20_temperature"
 
 
@@ -240,7 +250,7 @@ class MainActivity : AppCompatActivity() { // Определение класс�
         """.trimIndent())
                     if (DS18B20_sensor_status) {imageView4.setImageResource(R.drawable.lampon)} else {imageView4.setImageResource(R.drawable.lampoff)}
                     if (RelayOnOff) {imageView3.setImageResource(R.drawable.lampon)} else {imageView3.setImageResource(R.drawable.lampoff)}
-                    if (ONOFF) {imageView2.setImageResource(R.drawable.lampon)} else {imageView2.setImageResource(R.drawable.lampoff)}
+                    if (onoff) {imageView2.setImageResource(R.drawable.lampon)} else {imageView2.setImageResource(R.drawable.lampoff)}
         } catch (e: Exception) {
             e.printStackTrace()
             println("Exception occurred while parsing JSON: ${e.message}")
